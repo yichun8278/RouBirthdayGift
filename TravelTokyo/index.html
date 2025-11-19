@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <title>7 天行程小卡（Day1 已填寫）</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui,
+    "Noto Sans TC", sans-serif;
+    background: #fff7ec;
+    color: #5a4633;
+    padding: 18px;
+    display: flex;
+    justify-content: center;
+    font-size: 15px; /* ← 字體統一加大 */
+  }
+
+  .wrapper { max-width: 720px; width: 100%; }
+
+  h1.title {
+    text-align: center;
+    font-size: 26px; /* 字體加大 */
+    margin-bottom: 16px;
+    letter-spacing: 0.08em;
+  }
+
+  .subtitle {
+    text-align: center;
+    font-size: 14px;
+    opacity: 0.8;
+    margin-bottom: 18px;
+  }
+
+  /* 一行一張卡 */
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .day-card {
+    background: #fffaf3;
+    border-radius: 20px;
+    padding: 16px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 8px 16px rgba(150, 110, 80, 0.12);
+  }
+
+  .day-card::before,
+  .day-card::after {
+    content: "";
+    position: absolute;
+    border-radius: 50%;
+    opacity: 0.18;
+    pointer-events: none;
+  }
+
+  .day-card::before {
+    width: 120px;
+    height: 120px;
+    background: #ffe0b5;
+    top: -40px;
+    right: -40px;
+  }
+
+  .day-card::after {
+    width: 100px;
+    height: 100px;
+    background: #ffd0c9;
+    bottom: -40px;
+    left: -30px;
+  }
+
+  .card-inner { position: relative; z-index: 1; }
+
+  /* ⭐ 改成你自己照片的 avatar */
+  .avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    overflow: hidden;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.15);
+    flex-shrink: 0;
+  }
+
+  .avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .card-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+  }
+
+  .day-title { font-size: 17px; font-weight: 700; }
+  .day-sub { font-size: 13px; opacity: 0.8; }
+  .tag {
+    display: inline-block;
+    margin-top: 3px;
+    font-size: 12px;
+    padding: 3px 10px;
+    border-radius: 999px;
+    background: #ffe7c7;
+  }
+
+  .lines { margin-top: 10px; font-size: 14px; line-height: 1.6; }
+
+  .line { display: flex; gap: 6px; margin-bottom: 6px; }
+  .line-time { min-width: 70px; font-weight: 600; flex-shrink: 0; }
+</style>
+</head>
+
+<body>
+  <div class="wrapper">
+    <h1 class="title">東京旅行小卡</h1>
+    <p class="subtitle"></p>
+
+    <div class="grid">
+
+      <!-- DAY 2：河口湖 -->
+      <div class="day-card">
+        <div class="card-inner">
+          <div class="card-header">
+            <div class="avatar">
+                <img src="PUFF.jpg" alt="avatar">
+            </div>
+            <div>
+              <div class="day-title">DAY 2 — 河口湖一日遊</div>
+              <div class="day-sub">紅葉迴廊、大石公園、富士山</div>
+              <div class="tag">11 / 21 ( 五 )</div>
+            </div>
+          </div>
+
+          <div class="lines">
+            <div class="line">
+              <div class="line-time"></div>
+              <div></div>
+            </div>
+            <div class="line">
+              <div class="line-time">07:30</div>
+              <div>新宿 → 大月　※07:30–08:30</div>
+            </div>
+            <div class="line">
+              <div class="line-time">08:50</div>
+              <div>大月 → 河口湖　※08:50–09:44</div>
+            </div>
+            <div class="line">
+              <div class="line-time">10:00</div>
+              <div>紅線巴士 → 紅葉迴廊散步拍照<br/>河口湖站搭紅線巴士 → 久保田一竹美術館站</div>
+            </div>
+            <div class="line">
+              <div class="line-time">11:40</div>
+              <div>不動茶屋 午餐<br>從紅葉迴廊步行 → 餺飥不動 河口湖北本店</div>
+            </div>
+            <div class="line">
+              <div class="line-time">13:15</div>
+              <div>大石公園（富士山＋湖景）<br>前往大石公園，可選紅線巴士（約15分）or沿湖散步（約30分）</div>
+            </div>
+            <div class="line">
+              <div class="line-time">15:00</div>
+              <div>河口湖站周邊自由散步<br>搭紅線巴士由大石公園 → 河口湖站</div>
+            </div>
+            <div class="line">
+              <div class="line-time">16:49</div>
+              <div>河口湖 → 新宿 <br>16:49–18:45</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- DAY 3：輕井澤 -->
+      <div class="day-card">
+        <div class="card-inner">
+          <div class="card-header">
+            <div class="avatar">
+                <img src="CRO.jpg" alt="avatar">
+            </div>
+            <div>
+              <div class="day-title">DAY 3 — 輕井澤一日遊</div>
+              <div class="day-sub">雲場池、榆樹街小鎮、Outlet</div>
+              <div class="tag">11 / 22 ( 六 )</div>
+            </div>
+          </div>
+
+          <div class="lines">
+            <div class="line">
+              <div class="line-time"></div>
+              <div></div>
+            </div>
+            <div class="line">
+              <div class="line-time">07:24</div>
+              <div>東京 → 輕井澤（新幹線）　※7:24–8:42</div>
+            </div>
+            <div class="line">
+              <div class="line-time">09:00</div>
+              <div>雲場池散步<br/>步行約 20 分或搭公車</div>
+            </div>
+            <div class="line">
+              <div class="line-time">10:30</div>
+              <div>舊輕井澤銀座街<br>從雲場池步行約15～20分，Snoopy、小店逛街</div>
+            </div>
+            <div class="line">
+              <div class="line-time">13:30</div>
+              <div>中輕井澤 → 榆樹街小鎮・石之教堂<br>搭 Town Loop 巴士或電車＋接駁</div>
+            </div>
+            <div class="line">
+              <div class="line-time">15:45</div>
+              <div>輕井澤 Prince Shopping Plaza Outlet<br>回到輕井澤站南口步行約 3 分鐘</div>
+            </div>
+            <div class="line">
+              <div class="line-time">17:41</div>
+              <div>輕井澤 → 東京（新幹線） <br>17:41–18:52</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- DAY 4：上野 -->
+      <div class="day-card">
+        <div class="card-inner">
+          <div class="card-header">
+            <div class="avatar">
+                <img src="PUFF.jpg" alt="avatar">
+            </div>
+            <div>
+              <div class="day-title">DAY 4 — 上野</div>
+              <div class="day-sub">上野動物園、阿美橫町、今半</div>
+              <div class="tag">11 / 23 ( 日 )</div>
+            </div>
+          </div>
+
+          <div class="lines">
+            <div class="line">
+              <div class="line-time">10:00</div>
+              <div>上野動物園（看熊貓）</div>
+            </div>
+            <div class="line">
+              <div class="line-time">12:00</div>
+              <div>阿美橫町午餐 + 閒晃</div>
+            </div>
+            <div class="line">
+              <div class="line-time">14:00</div>
+              <div>上野公園散步</div>
+            </div>
+            <div class="line">
+              <div class="line-time">17:30</div>
+              <div>人形町今半 壽喜燒（上野廣小路店）</div>
+            </div>
+            <div class="line">
+              <div class="line-time">19:00</div>
+              <div>夜逛阿美橫町</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- DAY 5：Snoopy & 六本木 -->
+      <div class="day-card">
+        <div class="card-inner">
+          <div class="card-header">
+            <div class="avatar">
+            <div class="avatar">
+                <img src="CRO.jpg" alt="avatar">
+            </div>
+            </div>
+            <div>
+              <div class="day-title">DAY 5 — Snoopy & 六本木點燈</div>
+              <div class="day-sub">南町田 Grandberry Park 一日小旅行</div>
+              <div class="tag">11 / 24 ( 一 )</div>
+            </div>
+          </div>
+
+          <div class="lines">
+            <div class="line">
+              <div class="line-time">09:30</div>
+              <div>東京出發 → 南町田 Grandberry Park</div>
+            </div>
+            <div class="line">
+              <div class="line-time">10:30</div>
+              <div>史努比博物館 參觀＆拍照</div>
+            </div>
+            <div class="line">
+              <div class="line-time">12:30</div>
+              <div>PEANUTS Cafe 午餐</div>
+            </div>
+            <div class="line">
+              <div class="line-time">14:00</div>
+              <div>Grandberry Park 逛街散步、買紀念品</div>
+            </div>
+            <div class="line">
+              <div class="line-time">15:30</div>
+              <div>回東京市區 → 搭日比谷線前往六本木</div>
+            </div>
+            <div class="line">
+              <div class="line-time">16:30</div>
+              <div>六本木聖誕之丘 等待點燈（17:00 點燈）</div>
+            </div>
+            <div class="line">
+              <div class="line-time">18:00</div>
+              <div>六本木點燈散步拍照（櫸木坂・毛利庭園・Midtown）</div>
+            </div>
+            <div class="line">
+              <div class="line-time">20:00</div>
+              <div>六本木周邊 晚餐（居酒屋／拉麵／和食）</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- DAY 6：原宿・涉谷 -->
+      <div class="day-card">
+        <div class="card-inner">
+          <div class="card-header">
+            <div class="avatar">
+                <img src="PUFF.jpg" alt="avatar">
+            </div>
+            <div>
+              <div class="day-title">DAY 6 — 原宿・涉谷購物日</div>
+              <div class="day-sub">銀杏大道 · 潮牌 · LOFT 大採購</div>
+              <div class="tag">11 / 25 ( 二 )</div>
+            </div>
+          </div>
+
+          <div class="lines">
+            <div class="line">
+              <div class="line-time">8:00</div>
+              <div>明治神宮外苑 銀杏大道散步＆拍照</div>
+            </div>
+            <div class="line">
+              <div class="line-time">10:00</div>
+              <div>表參道／原宿 逛潮牌、Human & Blue Bottle</div>
+            </div>
+            <div class="line">
+              <div class="line-time">12:00</div>
+              <div>涉谷敘敘苑<br><span class="note"></span></div>
+            </div>
+            <div class="line">
+              <div class="line-time">14:00</div>
+              <div>涉谷LOFT開逛</div>
+            </div>
+            <div class="line">
+              <div class="line-time">18:00</div>
+              <div>晚餐<br><span class="note">預留約 3 小時慢慢逛文具・雜貨</span></div>
+            </div>
+            <div class="line">
+              <div class="line-time">20:00</div>
+              <div>新宿開逛</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- DAY 7：藏前・吉祥寺・晴空塔 -->
+      <div class="day-card">
+        <div class="card-inner">
+          <div class="card-header">
+            <div class="avatar">
+              <img src="CRO.jpg" alt="avatar">
+            </div>
+            <div>
+              <div class="day-title">DAY 7 — 藏前・吉祥寺・晴空塔</div>
+              <div class="day-sub">文青咖啡 · 公園散步 · 夜景</div>
+              <div class="tag">11 / 26 ( 三 )</div>
+            </div>
+          </div>
+
+          <div class="lines">
+            <div class="line">
+              <div class="line-time">10:00</div>
+              <div>藏前 文青散步（咖啡、小店、手拭、雜貨）</div>
+            </div>
+            <div class="line">
+              <div class="line-time">12:30</div>
+              <div>藏前 午餐<br><span class="note">蕎麥麵、茶泡飯、輕食咖啡皆可</span></div>
+            </div>
+            <div class="line">
+              <div class="line-time">14:00</div>
+              <div>前往吉祥寺 — 井之頭公園、商店街散步</div>
+            </div>
+            <div class="line">
+              <div class="line-time">17:00</div>
+              <div>吉祥寺「美登利壽司」排隊＆享用晚餐</div>
+            </div>
+            <div class="line">
+              <div class="line-time">19:00</div>
+              <div>前往押上 晴空塔 夜景 & 逛商場</div>
+            </div>
+            <div class="line">
+              <div class="line-time">21:00</div>
+              <div>返回住宿，結束文青＋夜景的一天</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- grid end -->
+  </div><!-- wrapper end -->
+</body>
+</html>
