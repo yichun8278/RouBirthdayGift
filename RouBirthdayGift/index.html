@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <title>給 ROU 的生日小卡</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="一張專屬於 ROU 的小小網頁生日卡片。">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        sans-serif;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: radial-gradient(circle at top, #ffeef5, #ffe4c7);
+      overflow: hidden;
+    }
+
+    .hearts {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 0;
+    }
+
+    .heart {
+      position: absolute;
+      font-size: 14px;
+      opacity: 0.3;
+      animation: floatUp linear infinite;
+    }
+
+    @keyframes floatUp {
+      0% {
+        transform: translateY(0) translateX(0) scale(0.8);
+        opacity: 0;
+      }
+      20% {
+        opacity: 0.4;
+      }
+      100% {
+        transform: translateY(-120vh) translateX(30px) scale(1.1);
+        opacity: 0;
+      }
+    }
+
+    .card-wrapper {
+      position: relative;
+      z-index: 1;
+      padding: 20px;
+    }
+
+    .card {
+      width: min(360px, 90vw);
+      background: rgba(255, 255, 255, 0.92);
+      border-radius: 24px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+      padding: 28px 24px 24px;
+      text-align: center;
+      backdrop-filter: blur(12px);
+      transform-origin: center;
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 24px 50px rgba(0, 0, 0, 0.16);
+    }
+
+    .card-header {
+      margin-bottom: 14px;
+    }
+
+    .tag {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 999px;
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      background: #ffe7f2;
+      color: #d14c75;
+    }
+
+    .title {
+      margin-top: 10px;
+      font-size: 22px;
+      font-weight: 700;
+      color: #333;
+    }
+
+    .subtitle {
+      margin-top: 4px;
+      font-size: 14px;
+      color: #666;
+    }
+
+    .divider {
+      width: 60px;
+      height: 2px;
+      background: linear-gradient(90deg, #ff9aa2, #fbc2eb);
+      border-radius: 999px;
+      margin: 18px auto 20px;
+    }
+
+    .preview-text {
+      font-size: 15px;
+      color: #555;
+      line-height: 1.6;
+      margin-bottom: 16px;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 10px 18px;
+      border-radius: 999px;
+      border: none;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 600;
+      background: linear-gradient(135deg, #ff9aa2, #ffc3a0);
+      color: #fff;
+      box-shadow: 0 10px 20px rgba(255, 145, 164, 0.45);
+      transition: transform 0.15s ease, box-shadow 0.15s ease, filter 0.15s ease;
+    }
+
+    .button span.icon {
+      font-size: 16px;
+    }
+
+    .button:active {
+      transform: translateY(2px) scale(0.98);
+      box-shadow: 0 4px 10px rgba(255, 145, 164, 0.35);
+      filter: brightness(0.98);
+    }
+
+    .message {
+      margin-top: 18px;
+      text-align: left;
+      font-size: 14px;
+      color: #444;
+      line-height: 1.8;
+      max-height: 0;
+      opacity: 0;
+      overflow: hidden;
+      transition: max-height 0.5s ease, opacity 0.5s ease, margin-top 0.3s ease;
+    }
+
+    .card.open .message {
+      max-height: 400px;
+      opacity: 1;
+      margin-top: 20px;
+    }
+
+    .message p + p {
+      margin-top: 10px;
+    }
+
+    .message .highlight {
+      font-weight: 600;
+      color: #d14c75;
+    }
+
+    .signature {
+      margin-top: 14px;
+      text-align: right;
+      font-size: 13px;
+      color: #777;
+    }
+
+    .signature .name {
+      font-weight: 600;
+      letter-spacing: 0.04em;
+    }
+
+    .tiny {
+      margin-top: 4px;
+      font-size: 12px;
+      opacity: 0.7;
+    }
+
+    .card.open {
+      transform: translateY(-6px) scale(1.01);
+      box-shadow: 0 26px 55px rgba(0, 0, 0, 0.18);
+    }
+  </style>
+</head>
+<body>
+  <div class="hearts" id="hearts-container"></div>
+
+  <div class="card-wrapper">
+    <div class="card" id="card">
+      <div class="card-header">
+        <div class="tag">Happy Birthday</div>
+        <h1 class="title">給我最喜歡的 ROU ♡</h1>
+        <p class="subtitle">今天是妳專屬的小小網頁生日卡</p>
+      </div>
+
+      <div class="divider"></div>
+
+      <p class="preview-text">
+        有些話面對面講會害羞，所以我把它們藏在這張小卡裡。<br />
+        準備好了就按下面這個按鈕開啟吧！
+      </p>
+
+      <button class="button" id="open-btn">
+        <span class="icon">🎁</span>
+        <span id="btn-text">點我打開生日小卡</span>
+      </button>
+
+      <div class="message" id="message">
+        <p>
+          親愛的 <span class="highlight">ROU</span>，生日快樂！謝謝妳一直在我身邊，陪我一起笑、一起累、一起面對很多很多生活裡的大大小小。
+        </p>
+        <p>
+          今年我希望，妳可以多一點為自己開心的時光，少一點為別人擔心的壓力。妳真的已經很棒、很努力了，偶爾也要記得好好被疼愛、好好休息。
+        </p>
+        <p>
+          未來的路我想跟妳一起慢慢走，不一定要多厲害、多厲害，但想和妳一起變得更舒服、更自在。只要妳願意，我都會在妳旁邊。
+        </p>
+        <p>
+          祝妳今年：心裡有光、眼裡有笑、睡得安穩、夢都甜甜。<br />
+          也希望往後每一年的生日，都還能親口對妳說一句——
+          <span class="highlight">生日快樂，我好喜歡妳。</span>
+        </p>
+
+        <div class="signature">
+          <div class="name">From Ijyun</div>
+          <div class="tiny">（這張小卡是為妳特製的網頁版本 ♡）</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const card = document.getElementById("card");
+    const btn = document.getElementById("open-btn");
+    const btnText = document.getElementById("btn-text");
+
+    btn.addEventListener("click", () => {
+      card.classList.toggle("open");
+      const isOpen = card.classList.contains("open");
+      btnText.textContent = isOpen ? "收合起來（再看一次也可以）" : "點我打開生日小卡";
+    });
+
+    const heartsContainer = document.getElementById("hearts-container");
+    const heartChars = ["♥", "♡", "❣"];
+
+    function createHeart() {
+      const heart = document.createElement("div");
+      heart.className = "heart";
+      heart.textContent =
+        heartChars[Math.floor(Math.random() * heartChars.length)];
+      const size = 10 + Math.random() * 10;
+      const left = Math.random() * 100;
+      const duration = 6 + Math.random() * 6;
+
+      heart.style.left = left + "vw";
+      heart.style.fontSize = size + "px";
+      heart.style.animationDuration = duration + "s";
+
+      heartsContainer.appendChild(heart);
+
+      setTimeout(() => {
+        heartsContainer.removeChild(heart);
+      }, duration * 1000);
+    }
+
+    setInterval(createHeart, 400);
+  </script>
+</body>
+</html>
