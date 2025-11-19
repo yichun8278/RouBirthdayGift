@@ -3,104 +3,94 @@
 <head>
   <meta charset="UTF-8" />
   <title>給 ROU 的生日小卡</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="一張專屬於 ROU 的小小網頁生日卡片。">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <meta name="description" content="一張專屬於 ROU 的手機版網頁生日卡片。">
   <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
-        sans-serif;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       min-height: 100vh;
       display: flex;
       align-items: center;
       justify-content: center;
       background: radial-gradient(circle at top, #ffeef5, #ffe4c7);
-      overflow: hidden;
-    }
-
-    .hearts {
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      overflow: hidden;
-      z-index: 0;
-    }
-
-    .heart {
-      position: absolute;
-      font-size: 14px;
-      opacity: 0.3;
-      animation: floatUp linear infinite;
-    }
-
-    @keyframes floatUp {
-      0% {
-        transform: translateY(0) translateX(0) scale(0.8);
-        opacity: 0;
-      }
-      20% {
-        opacity: 0.4;
-      }
-      100% {
-        transform: translateY(-120vh) translateX(30px) scale(1.1);
-        opacity: 0;
-      }
+      overflow-x: hidden;
     }
 
     .card-wrapper {
       position: relative;
       z-index: 1;
-      padding: 20px;
+      padding: 16px;
+      width: 100%;
+      max-width: 430px;
     }
 
+    /* 🐱 貓咪貼紙 */
+    .cats {
+      height: 120px;
+      margin-bottom: -20px;
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      pointer-events: none;
+    }
+    .cats img {
+      width: 100px;
+      height: auto;
+      animation: float 3s ease-in-out infinite;
+      filter: drop-shadow(0 5px 8px rgba(0,0,0,0.15));
+    }
+    .cats img:first-child {
+      margin-top: 20px; /* 第一隻往下 10px */
+    }
+    .cats.jump img {
+      animation: catJump 0.6s ease-out 1;
+    }
+    .cats img:nth-child(2) { animation-delay: 1.2s; }
+
+    @keyframes float {
+      0% { transform: translateY(0px); }
+      50% { transform: translateY(-8px); }
+      100% { transform: translateY(0px); }
+    }
+
+    @keyframes catJump {
+      0% { transform: translateY(0) scale(1); }
+      30% { transform: translateY(-14px) scale(1.05); }
+      100% { transform: translateY(0) scale(1); }
+    }
+
+    /* 📄 卡片本體 */
     .card {
-      width: min(360px, 90vw);
-      background: rgba(255, 255, 255, 0.92);
+      background: rgba(255, 255, 255, 0.96);
       border-radius: 24px;
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
-      padding: 28px 24px 24px;
+      padding: 20px 18px 24px;
+      box-shadow: 0 16px 32px rgba(0, 0, 0, 0.12);
       text-align: center;
-      backdrop-filter: blur(12px);
-      transform-origin: center;
-      transition: transform 0.4s ease, box-shadow 0.4s ease;
-    }
-
-    .card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 24px 50px rgba(0, 0, 0, 0.16);
-    }
-
-    .card-header {
-      margin-bottom: 14px;
+      transition: 0.3s ease;
     }
 
     .tag {
       display: inline-block;
-      padding: 4px 12px;
+      padding: 3px 10px;
       border-radius: 999px;
-      font-size: 12px;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
+      font-size: 11px;
       background: #ffe7f2;
       color: #d14c75;
+      letter-spacing: 0.06em;
     }
 
     .title {
-      margin-top: 10px;
-      font-size: 22px;
-      font-weight: 700;
+      margin-top: 8px;
+      font-size: 20px;
       color: #333;
+      font-weight: 700;
     }
-
     .subtitle {
-      margin-top: 4px;
-      font-size: 14px;
+      font-size: 13px;
       color: #666;
+      margin-top: 4px;
     }
 
     .divider {
@@ -108,176 +98,420 @@
       height: 2px;
       background: linear-gradient(90deg, #ff9aa2, #fbc2eb);
       border-radius: 999px;
-      margin: 18px auto 20px;
+      margin: 14px auto;
+    }
+
+    /* 📸 上面的六宮格照片（3x2，直式比例） */
+    .photo-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 6px;
+      margin: 10px 0 18px;
+    }
+    .photo-grid img {
+      width: 100%;
+      aspect-ratio: 3 / 4; /* 直式 */
+      object-fit: cover;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.12);
     }
 
     .preview-text {
-      font-size: 15px;
+      font-size: 14px;
       color: #555;
       line-height: 1.6;
-      margin-bottom: 16px;
+      margin: 6px 4px 14px;
     }
 
     .button {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
+      background: linear-gradient(135deg, #ff9aa2, #ffc3a0);
+      color: white;
+      border: none;
       padding: 10px 18px;
       border-radius: 999px;
-      border: none;
-      cursor: pointer;
       font-size: 14px;
       font-weight: 600;
+      box-shadow: 0 10px 20px rgba(255,145,164,0.45);
+      cursor: pointer;
+    }
+    .button:active { transform: scale(0.97); }
+
+    /* 🔐 密碼輸入區（內嵌 + 六個小圓點） */
+    .password-box {
+      background: #ffffff;
+      border-radius: 18px;
+      padding: 16px;
+      margin: 12px auto;
+      text-align: center;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+      animation: fadeIn 0.3s ease;
+    }
+    .password-box.hidden {
+      display: none;
+    }
+    .password-title {
+      font-size: 14px;
+      color: #555;
+      margin-bottom: 8px;
+    }
+
+    .password-dots {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 6px;
+    }
+    .password-dots .dot {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      border: 2px solid #ffc3d1;
+      box-sizing: border-box;
+    }
+    .password-dots .dot.filled {
+      background: #ff9aa2;
+      border-color: #ff9aa2;
+    }
+
+    /* 真正的 input 隱藏起來，只用來接收鍵盤輸入 */
+    .password-input {
+      position: absolute;
+      opacity: 0;
+      pointer-events: none;
+      height: 0;
+      width: 0;
+    }
+
+    .pw-error {
+      height: 18px;
+      font-size: 12px;
+      color: #d14c75;
+      margin-bottom: 6px;
+    }
+    .password-btn {
       background: linear-gradient(135deg, #ff9aa2, #ffc3a0);
-      color: #fff;
-      box-shadow: 0 10px 20px rgba(255, 145, 164, 0.45);
-      transition: transform 0.15s ease, box-shadow 0.15s ease, filter 0.15s ease;
+      border: none;
+      color: white;
+      padding: 8px 16px;
+      border-radius: 999px;
+      font-size: 14px;
+      cursor: pointer;
+    }
+    .password-btn:active {
+      transform: scale(0.96);
     }
 
-    .button span.icon {
-      font-size: 16px;
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-6px); }
+      to   { opacity: 1; transform: translateY(0); }
     }
 
-    .button:active {
-      transform: translateY(2px) scale(0.98);
-      box-shadow: 0 4px 10px rgba(255, 145, 164, 0.35);
-      filter: brightness(0.98);
-    }
-
+    /* 🎁 打開後內容（淡入動畫） */
     .message {
-      margin-top: 18px;
-      text-align: left;
       font-size: 14px;
       color: #444;
       line-height: 1.8;
+      text-align: left;
       max-height: 0;
       opacity: 0;
       overflow: hidden;
-      transition: max-height 0.5s ease, opacity 0.5s ease, margin-top 0.3s ease;
+      transition: max-height 0.45s ease, opacity 0.45s ease, margin-top 0.45s ease;
+      margin-top: 0;
     }
-
     .card.open .message {
-      max-height: 400px;
-      opacity: 1;
-      margin-top: 20px;
+        max-height: none;
+        opacity: 1;
+        margin-top: 16px;
+        animation: fadeInUp 0.45s ease;
+    }
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(8px); }
+      to   { opacity: 1; transform: translateY(0); }
     }
 
-    .message p + p {
-      margin-top: 10px;
-    }
-
-    .message .highlight {
-      font-weight: 600;
-      color: #d14c75;
-    }
+    .message p + p { margin-top: 8px; text-align: center;}
 
     .signature {
       margin-top: 14px;
-      text-align: right;
+      text-align: center;
       font-size: 13px;
       color: #777;
     }
 
-    .signature .name {
-      font-weight: 600;
-      letter-spacing: 0.04em;
+    /* 📷 打開後的 2x2 直式照片區 */
+    .inner-photo-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr); /* 3 欄 */
+      gap: 8px;
+      margin-top: 14px;
     }
 
-    .tiny {
-      margin-top: 4px;
-      font-size: 12px;
-      opacity: 0.7;
+    .inner-photo-grid img {
+      width: 100%;
+      aspect-ratio: 3 / 4; /* 直式比例 */
+      object-fit: cover;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.12);
     }
-
-    .card.open {
-      transform: translateY(-6px) scale(1.01);
-      box-shadow: 0 26px 55px rgba(0, 0, 0, 0.18);
+    /* 飄愛心背景 */
+    .hearts {
+      position: fixed;
+      inset: 0;
+      pointer-events:none;
+      overflow:hidden;
+      z-index:0;
+    }
+    .heart {
+      position:absolute;
+      opacity:.3;
+      animation: floatUp linear infinite;
+    }
+    @keyframes floatUp {
+      0%   { transform:translateY(0); }
+      100% { transform:translateY(-120vh); }
     }
   </style>
 </head>
 <body>
+
+  <!-- 🌟 背景愛心 -->
   <div class="hearts" id="hearts-container"></div>
 
   <div class="card-wrapper">
+
+    <!-- 🐱 泡芙 & 可頌 -->
+    <div class="cats">
+      <img src="cat1.png" alt="泡芙">
+      <img src="cat2.png" alt="可頌">
+    </div>
+
+    <!-- 🎀 卡片 -->
     <div class="card" id="card">
-      <div class="card-header">
-        <div class="tag">Happy Birthday</div>
-        <h1 class="title">給我最喜歡的 ROU ♡</h1>
-        <p class="subtitle">今天是妳專屬的小小網頁生日卡</p>
-      </div>
+
+      <div class="tag">Happy Birthday</div>
+      <h1 class="title">給我的阿寶 ♡</h1>
+      <p class="subtitle">祝我最美麗的小公主 &amp; 小寶貝 生日快樂</p>
 
       <div class="divider"></div>
 
+      <!-- 📸 上面六宮格照片（3x2 直式） -->
+      <div class="photo-grid">
+        <img src="p1.jpg" alt="">
+        <img src="p2.jpg" alt="">
+        <img src="p3.jpg" alt="">
+        <img src="p7.jpg" alt="">
+        <img src="p8.jpg" alt="">
+        <img src="p9.jpg" alt="">
+        <img src="p4.jpg" alt="">
+        <img src="p5.jpg" alt="">
+        <img src="p6.jpg" alt="">
+      </div>
+
       <p class="preview-text">
-        有些話面對面講會害羞，所以我把它們藏在這張小卡裡。<br />
-        準備好了就按下面這個按鈕開啟吧！
+        我相信你一定知道這個六位數字的密碼是什麼
       </p>
 
-      <button class="button" id="open-btn">
-        <span class="icon">🎁</span>
-        <span id="btn-text">點我打開生日小卡</span>
-      </button>
+      <!-- 🔐 密碼輸入區（預設隱藏） -->
+      <div id="password-box" class="password-box hidden">
+        <p class="password-title">請輸入六位數密碼</p>
 
+        <div class="password-dots" id="password-dots">
+          <span class="dot"></span>
+          <span class="dot"></span>
+          <span class="dot"></span>
+          <span class="dot"></span>
+          <span class="dot"></span>
+          <span class="dot"></span>
+        </div>
+
+        <!-- 真正接鍵盤輸入的 hidden input -->
+        <input 
+          id="password-input" 
+          type="tel" 
+          inputmode="numeric"
+          maxlength="6" 
+          class="password-input"
+        />
+
+        <div id="pw-error" class="pw-error"></div>
+
+        <button class="password-btn" id="password-submit">解鎖</button>
+      </div>
+
+      <!-- 主按鈕 -->
+      <button class="button" id="open-btn">🔐 輸入我們的專屬密碼</button>
+
+      <!-- 🎁 打開後才會展開的內容 -->
       <div class="message" id="message">
-        <p>
-          親愛的 <span class="highlight">ROU</span>，生日快樂！謝謝妳一直在我身邊，陪我一起笑、一起累、一起面對很多很多生活裡的大大小小。
-        </p>
-        <p>
-          今年我希望，妳可以多一點為自己開心的時光，少一點為別人擔心的壓力。妳真的已經很棒、很努力了，偶爾也要記得好好被疼愛、好好休息。
-        </p>
-        <p>
-          未來的路我想跟妳一起慢慢走，不一定要多厲害、多厲害，但想和妳一起變得更舒服、更自在。只要妳願意，我都會在妳旁邊。
-        </p>
-        <p>
-          祝妳今年：心裡有光、眼裡有笑、睡得安穩、夢都甜甜。<br />
-          也希望往後每一年的生日，都還能親口對妳說一句——
-          <span class="highlight">生日快樂，我好喜歡妳。</span>
-        </p>
+        <p></p>
+        <p>親愛的寶，我就知道你一定知道密碼是什麼</p>
+        <p></p>
+        <p>有好多好多話想跟你說</p>
+        <p>但最想跟你說的就是</p>
+        <p>謝謝妳陪我一起經歷生活裡的每一件小事</p>
+        <p>和妳在一起的每一天，我都很快樂很幸福</p>
+        <p></p>
+        <p>過去這一年我們又一起解鎖了好多好多事情</p>
+        <p>一起去運動一起跑馬拉松一起參加瑋婷的婚禮</p>
+        <p></p>
+        <!-- 📷 打開後的 2×2 直式照片區 -->
+        <div class="inner-photo-grid">
+          <img src="s1.jpg" alt="">
+          <img src="s2.jpg" alt="">
+          <img src="s3.jpg" alt="">
+          <img src="s4.jpg" alt="">
+          <img src="s5.jpg" alt="">
+          <img src="s6.jpg" alt="">
+          <img src="s7.jpg" alt="">
+          <img src="s8.jpg" alt="">
+          <img src="s11.jpg" alt="">
+          <img src="s12.jpg" alt="">
+          <img src="s10.jpg" alt="">
+          <img src="s9.jpg" alt="">
+        </div>
+        <p></p>
+        <p>一起去看了房子也開始構築我們的小家庭</p>
+        <p>也一起成為了兩隻小屁貓的媽媽(best friend)</p>
+        <p></p>
+        <p>謝謝你每一次每一次都陪在我身邊</p>
+        <p>替常常衝動的我思考了很多也支持我的每個決定</p>
+        <p></p>
+
+        <!-- 📷 打開後的 2×2 直式照片區 -->
+        <div class="inner-photo-grid">
+          <img src="s13.jpg" alt="">
+          <img src="s15.jpg" alt="">
+          <img src="s14.jpg" alt="">
+        </div>
+        <p></p>
+        <p>我知道每一年我都這麼說</p>
+        <p>未來再請你多多包涵多多指教</p>
+        <p>也希望以後的很多很多生日，我都還能在妳身邊說：</p>
+        <p>「生日快樂，我愛妳我的寶」</p>
+        <p></p>
 
         <div class="signature">
-          <div class="name">From Ijyun</div>
-          <div class="tiny">（這張小卡是為妳特製的網頁版本 ♡）</div>
+        <p>FROM YOUR CHUN</p>
         </div>
+        <div class="inner-photo-grid">
+          <img src="s16.jpg" alt="">
+          <img src="s17.jpg" alt="">
+          <img src="s18.jpg" alt="">
+        </div>
+
       </div>
     </div>
   </div>
 
   <script>
     const card = document.getElementById("card");
-    const btn = document.getElementById("open-btn");
-    const btnText = document.getElementById("btn-text");
+    const button = document.getElementById("open-btn");
 
-    btn.addEventListener("click", () => {
-      card.classList.toggle("open");
-      const isOpen = card.classList.contains("open");
-      btnText.textContent = isOpen ? "收合起來（再看一次也可以）" : "點我打開生日小卡";
-    });
+    const pwBox = document.getElementById("password-box");
+    const pwInput = document.getElementById("password-input");
+    const pwSubmit = document.getElementById("password-submit");
+    const pwError = document.getElementById("pw-error");
+    const pwDotsContainer = document.getElementById("password-dots");
+    const pwDots = pwDotsContainer.querySelectorAll(".dot");
+    const cats = document.querySelector(".cats");
 
-    const heartsContainer = document.getElementById("hearts-container");
-    const heartChars = ["♥", "♡", "❣"];
+    // 👉 在這裡改成你想要的六位數密碼
+    const PASSWORD = "108324";
 
-    function createHeart() {
-      const heart = document.createElement("div");
-      heart.className = "heart";
-      heart.textContent =
-        heartChars[Math.floor(Math.random() * heartChars.length)];
-      const size = 10 + Math.random() * 10;
-      const left = Math.random() * 100;
-      const duration = 6 + Math.random() * 6;
+    let unlocked = false;
 
-      heart.style.left = left + "vw";
-      heart.style.fontSize = size + "px";
-      heart.style.animationDuration = duration + "s";
-
-      heartsContainer.appendChild(heart);
-
-      setTimeout(() => {
-        heartsContainer.removeChild(heart);
-      }, duration * 1000);
+    function updateDots(length) {
+      pwDots.forEach((dot, index) => {
+        if (index < length) {
+          dot.classList.add("filled");
+        } else {
+          dot.classList.remove("filled");
+        }
+      });
     }
 
+    // 點主按鈕：若已解鎖就收合/展開；未解鎖就顯示密碼框
+    button.addEventListener("click", () => {
+      if (unlocked) {
+        const isOpen = card.classList.toggle("open");
+        button.textContent = isOpen ? "鎖起來~🔐" : "🔐 輸入密碼開啟";
+        return;
+      }
+
+      pwBox.classList.remove("hidden");
+      pwInput.focus();
+    });
+
+    // 點圓點區也可以 focus 輸入
+    pwDotsContainer.addEventListener("click", () => {
+      pwInput.focus();
+    });
+
+    // 輸入時更新圓點顯示
+    pwInput.addEventListener("input", (e) => {
+      let val = e.target.value.replace(/\D/g, "");
+      if (val.length > 6) val = val.slice(0, 6);
+      e.target.value = val;
+      updateDots(val.length);
+      pwError.textContent = "";
+    });
+
+    // 按「解鎖」按鈕
+    pwSubmit.addEventListener("click", handleUnlock);
+
+    // 按 Enter 也可以解鎖
+    pwInput.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") {
+        handleUnlock();
+      }
+    });
+
+    function handleUnlock() {
+      const input = pwInput.value.trim();
+
+      if (!/^[0-9]{6}$/.test(input)) {
+        pwError.textContent = "請輸入正確的六位數數字。";
+        return;
+      }
+
+      if (input === PASSWORD) {
+        unlocked = true;
+        pwError.textContent = "";
+        pwBox.classList.add("hidden");
+        card.classList.add("open");
+        button.textContent = "鎖起來";
+
+        // 密碼正確後讓貓咪跳一下
+        cats.classList.add("jump");
+        setTimeout(() => {
+          cats.classList.remove("jump");
+        }, 700);
+
+        // 捲到卡片中間
+        setTimeout(() => {
+          card.scrollIntoView({ behavior: "smooth", block: "center" });
+        }, 100);
+      } else {
+        pwError.textContent = "密碼錯誤，再試一次喔 💭";
+        pwInput.value = "";
+        updateDots(0);
+      }
+    }
+
+    // 飄愛心
+    const hearts = document.getElementById("hearts-container");
+    function createHeart(){
+      const h = document.createElement("div");
+      h.className = "heart";
+      h.textContent = ["♥","♡","❣"][Math.floor(Math.random()*3)];
+      h.style.left = Math.random()*100 + "vw";
+      h.style.fontSize = (12+Math.random()*14) + "px";
+      h.style.animationDuration = (6+Math.random()*6) + "s";
+      hearts.appendChild(h);
+      setTimeout(() => h.remove(), 8000);
+    }
     setInterval(createHeart, 400);
   </script>
+
 </body>
 </html>
